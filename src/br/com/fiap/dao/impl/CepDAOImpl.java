@@ -5,13 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import br.com.fiap.conexao.ConexaoBDManager;
 import br.com.fiap.dao.CepDAO;
 import br.com.fiap.model.Cep;
-import br.com.fiap.model.Imc;
 
 public class CepDAOImpl implements CepDAO{
 	private Connection conexao;
@@ -60,9 +58,33 @@ public class CepDAOImpl implements CepDAO{
 
 	@Override
 	public void cadastrar(Cep cep) {
-		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		
+		try {
+			conexao = ConexaoBDManager.obterConexao();
+			String sql = "INSERT INTO T_HTL_CEP(ID_CEP, NR_CEP, T_HTL_LOGRADOURO_ID_LOGRADOURO, T_HTL_ENDERECO_ID_ENDERECO, T_HTL_UF_ID_UF, H_HTL_CIDADE_ID_CIDADE, T_HTL_COMPLEMENTO_ID_COMPL, T_HTL_BAIRRO_ID_BAIRRO) VALUES(seq_cep.nextval, ?, ?, ?, ?, ?, ?, ?)";
+			stmt = conexao.prepareStatement(sql);
+			stmt.setInt(1, cep.getNrCep());
+			stmt.setInt(2, cep.getIdLogradouro());
+			stmt.setInt(3, cep.getIdEndereco());
+			stmt.setInt(4, cep.getIdUf());
+			stmt.setInt(5, cep.getIdCidade());
+			stmt.setInt(6, cep.getIdCompl());
+			stmt.setInt(7, cep.getIdBairro());
+			stmt.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conexao.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
+
 
 	@Override
 	public void atualizar(Cep cep) {
