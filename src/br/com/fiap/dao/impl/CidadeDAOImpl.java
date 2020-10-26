@@ -55,7 +55,7 @@ public class CidadeDAOImpl implements CidadeDAO{
 		
 		try {
 			conexao = ConexaoBDManager.obterConexao();
-			String sql = "INSERT INTO T_HTL_CIDADE (ID_CIDADE, DS_CIDADE) VALUES(seq_usuario.nextval, ?)";
+			String sql = "INSERT INTO H_HTL_CIDADE (ID_CIDADE, DS_CIDADE) VALUES(seq_cidade.nextval, ?)";
 			stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, cidade.getDsCidade());
 			stmt.executeUpdate();

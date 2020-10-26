@@ -55,7 +55,7 @@ public class UfDAOImpl implements UfDAO{
 		
 		try {
 			conexao = ConexaoBDManager.obterConexao();
-			String sql = "INSERT INTO T_HTL_UF (ID_UF, DS_UF) VALUES(seq_usuario.nextval, ?)";
+			String sql = "INSERT INTO T_HTL_UF (ID_UF, DS_UF) VALUES(seq_uf.nextval, ?)";
 			stmt = conexao.prepareStatement(sql);
 			stmt.setString(1, uf.getDsUf());
 			stmt.executeUpdate();
