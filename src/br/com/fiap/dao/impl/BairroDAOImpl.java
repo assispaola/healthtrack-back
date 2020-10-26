@@ -49,13 +49,31 @@ public class BairroDAOImpl implements BairroDAO{
 	}
 
 	@Override
-	public void cadastrar(Bairro Bairro) {
-		// TODO Auto-generated method stub
+	public void cadastrar(Bairro bairro) {
+		PreparedStatement stmt = null;
+		
+		try {
+			conexao = ConexaoBDManager.obterConexao();
+			String sql = "INSERT INTO T_HTL_BAIRRO(ID_BAIRRO, DS_BAIRRO) VALUES(seq_endereco.nextval, ?)";
+			stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, bairro.getDsBairro());
+			stmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conexao.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
 	@Override
-	public void atualizar(Bairro Bairro) {
+	public void atualizar(Bairro bairro) {
 		// TODO Auto-generated method stub
 		
 	}

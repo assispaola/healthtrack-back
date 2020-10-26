@@ -12,6 +12,9 @@ public class TesteEndComp {
 			EndCompDAOImpl dao = new EndCompDAOImpl();
 			List<EndComp> lista = dao.listarTodos();
 			
+			EndComp endComp1 = new EndComp();
+			
+
 			for (EndComp endcomp: lista) {
 				
 				System.out.println ("ID End Comp: " + endcomp.getIdEndComp() + " ID Usuario: " + endcomp.getIdUsuario() + " ID CEP: " + endcomp.getIdCep());
