@@ -50,8 +50,26 @@ public class UfDAOImpl implements UfDAO{
 	}
 
 	@Override
-	public void cadastrar(Uf Uf) {
-		// TODO Auto-generated method stub
+	public void cadastrar(Uf uf) {
+        PreparedStatement stmt = null;
+		
+		try {
+			conexao = ConexaoBDManager.obterConexao();
+			String sql = "INSERT INTO T_HTL_UF (ID_UF, DS_UF) VALUES(seq_usuario.nextval, ?)";
+			stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, uf.getDsUf());
+			stmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conexao.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 

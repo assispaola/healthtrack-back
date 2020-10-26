@@ -59,7 +59,7 @@ PreparedStatement stmt = null;
 			conexao = ConexaoBDManager.obterConexao();
 			String sql = "INSERT INTO T_HTL_COMPLEMENTO (ID_COMPL, DS_COMPL) VALUES(SEQ.COMPLEMENTO.nextval, ?)";
 			stmt = conexao.prepareStatement(sql);
-			stmt.setString(1, endComp.);
+			stmt.setInt(1, endComp.getIdEndComp());
 			stmt.executeUpdate();
 			
 		} catch(SQLException e) {
