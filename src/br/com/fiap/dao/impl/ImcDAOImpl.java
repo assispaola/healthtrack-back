@@ -59,7 +59,30 @@ public class ImcDAOImpl implements ImcDAO{
 
 	@Override
 	public void cadastrar(Imc imc) {
-		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		
+		try {
+			conexao = ConexaoBDManager.obterConexao();
+			String sql = "INSERT INTO T_HTL_IMC (ID_IMC, VL_IMC, DT_CADASTRO, NR_PESO, NR_ALTURA, T_HTL_USUARIO_ID_USUARIO) VALUES(SEQ_IMC.nextval, ?, ?, ?, ?, ?)";
+			stmt = conexao.prepareStatement(sql);
+			stmt.setDouble(1, imc.getValor());
+			java.sql.Date dataAtual = new java.sql.Date(imc.getDtCadastro().getTimeInMillis());
+			stmt.setDate(2, dataAtual);
+			stmt.setDouble(3, imc.getPeso()); 
+			stmt.setDouble(4, imc.getAltura());
+			stmt.setInt(5, imc.getIdUsuario());
+			stmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conexao.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
