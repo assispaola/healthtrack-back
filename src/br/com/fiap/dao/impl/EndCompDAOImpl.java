@@ -81,6 +81,7 @@ PreparedStatement stmt = null;
 		
 	}
 
+
 	@Override
 	public void remover(int idEndComp) {
 		// TODO Auto-generated method stub
