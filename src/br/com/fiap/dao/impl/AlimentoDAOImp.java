@@ -10,6 +10,7 @@ import java.util.List;
 import br.com.fiap.conexao.ConexaoBDManager;
 import br.com.fiap.dao.AlimentoDAO;
 import br.com.fiap.model.Almt;
+import br.com.fiap.model.Endereco;
 
 public class AlimentoDAOImp implements AlimentoDAO {
 	private Connection conexao;
@@ -25,14 +26,6 @@ public class AlimentoDAOImp implements AlimentoDAO {
 			String sql = "SELECT * FROM T_HTL_ALMT";
 			stmt = conexao.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			
-			
-//			private int idAlimento;
-//			private String nmAlimento;
-//			private int qtAlimento;
-//			private double qtCaloria;
-//			private int idUsuario;
-//			private int idPeriodo;
 			
 			
 			while (rs.next()){
@@ -61,9 +54,30 @@ public class AlimentoDAOImp implements AlimentoDAO {
 		return lista;
 	}
 
-	@Override
-	public void cadastrar(Almt almt) {
-		// TODO Auto-generated method stub
+	public void cadastrar(Almt alimento) {
+		PreparedStatement stmt = null;
+		
+		try {
+			conexao = ConexaoBDManager.obterConexao();
+			String sql = "INSERT INTO T_HTL_ALMT (ID_ALIMENTO, NM_ALIMENTO, QT_ALIMENTO, QT_CALORIA, T_HTL_USUARIO_ID_USUARIO, T_HTL_PERIODO_ID_PERIODO) VALUES(seq_almt.nextval, ?, ?, ?, ?, ?)";
+			stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, alimento.getNmAlimento());
+			stmt.setInt(2, alimento.getQtAlimento());
+			stmt.setDouble(3, alimento.getQtCaloria());
+			stmt.setInt(4, alimento.getIdUsuario());
+			stmt.setInt(5, alimento.getIdPeriodo());
+			stmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conexao.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
