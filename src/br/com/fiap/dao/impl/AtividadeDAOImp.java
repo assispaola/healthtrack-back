@@ -60,7 +60,31 @@ public class AtividadeDAOImp implements AtividadeDAO {
 
 	@Override
 	public void cadastrar(Atividade atividade) {
-		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+
+		try {
+			conexao = ConexaoBDManager.obterConexao();
+			String sql = "INSERT INTO T_HTL_ATV (ID_ATV, DT_CADASTRO, VL_TEMPO, VL_DISTANCIA,"
+					+ " T_HTL_TIPOATV_ID_TIPOATV, T_HTL_USUARIO_ID_USUARIO) VALUES (SEQ_ATIVIDADE.NEXTVAL, ?, ?, ?, ?, ?)";
+			stmt = conexao.prepareStatement(sql);
+			java.sql.Date dataAtual = new java.sql.Date(atividade.getDtCadastro().getTimeInMillis());
+			stmt.setDate(1, dataAtual);
+			stmt.setInt(2, atividade.getVlTempo());
+			stmt.setDouble(3, atividade.getVlDistancia());
+			stmt.setInt(4, atividade.getIdTipo());
+			stmt.setInt(5, atividade.getIdUsuario());
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conexao.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
