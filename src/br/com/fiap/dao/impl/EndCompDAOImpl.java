@@ -77,9 +77,29 @@ PreparedStatement stmt = null;
 
 	@Override
 	public void atualizar(EndComp endComp) {
-		// TODO Auto-generated method stub
+PreparedStatement stmt = null;
+		
+		try {
+			conexao = ConexaoBDManager.obterConexao();
+			String sql = "INSERT INTO T_HTL_ENDERECO (ID_ENDERECO, DS_ENDERECO, NR_ENDRECO) VALUES(seq_endereco.nextval, ?, ?)";
+			stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, endereco.getDsEndereco());
+			stmt.setInt(2, endereco.getNrEndereco());
+			stmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conexao.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
+
 
 	@Override
 	public void remover(int idEndComp) {
