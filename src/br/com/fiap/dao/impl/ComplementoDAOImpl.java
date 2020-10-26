@@ -50,7 +50,26 @@ public class ComplementoDAOImpl implements ComplementoDAO{
 
 	@Override
 	public void cadastrar(Complemento complemento) {
-		// TODO Auto-generated method stub
+PreparedStatement stmt = null;
+		
+		try {
+			conexao = ConexaoBDManager.obterConexao();
+			String sql = "INSERT INTO T_HTL_COMPLEMENTO (ID_COMPL, DS_COMPL) VALUES(SEQ_COMPLEMENTO.nextval, ?)";
+			stmt = conexao.prepareStatement(sql);
+			stmt.setString(1, complemento.getDsCompl());
+			stmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conexao.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		
 	}
 
